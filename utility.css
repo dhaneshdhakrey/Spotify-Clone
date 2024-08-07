@@ -18,3 +18,16 @@
 .c-black{
     background-color: black;
 }
+.c-grey{
+    background-color: #121212;
+}
+.rounded{
+    border-radius: 7px;
+}
+
+.m-1{
+    margin: 5px;
+}
+.p-1{
+    padding:13px;
+}
