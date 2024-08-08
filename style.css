@@ -14,6 +14,7 @@ body{
     background-color: black;
     color:white;
 }
+
 .left{
     width: 25vw;
     padding:10px;
@@ -32,7 +33,7 @@ body{
     font-weight: bold;
 }
 .library{
-    min-height: 80vh;
+    min-height: 74vh;
     position: relative;
 }
 
@@ -53,7 +54,7 @@ body{
     font-size:9px;
     gap:4px;
     position: absolute;
-    bottom: 0px;
+    bottom: 10px;
 }
 .left-footer a{
     color:grey;
@@ -70,7 +71,38 @@ body{
 .navcont>*{
     padding: 10px;
 }
-.spotifyplaylist{
-/* margin-top: 10px !important; */
+.cardcont{
+    margin-top: 25px;
+    display: flex;
+    gap: 11px;
+    flex-wrap: wrap;
 }
+.card{
+position: relative;
+width:200px;
+background-color: #252525;
+padding: 10px;
+border-radius: 10px;
+}
+.playbutt{
+    position: absolute;
+    top: 160px;
+    right: 12px;
+    /* opacity: 0; */
+    transition: ease-in-out;
+
+}
+
+.card img{
+    /* margin-top: 20px; */
+    width: 100%;
+    object-fit: contain;
+}
+.card>*{
+    padding-top: 9px;
+}
+.card p{
+    color:grey;
+}
+
 
