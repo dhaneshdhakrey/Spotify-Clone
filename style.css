@@ -22,6 +22,7 @@ body{
 .right{
     width: 75vw;
    margin: 15px 0;
+   position: relative;
 }
 
 .home ul li{
@@ -63,7 +64,8 @@ body{
 .navcont{
     display: flex;
     justify-content: space-between;
-    background-color:rgb(34 34 34) ;
+    background-color:rgb(34 34 34);
+    height: 65px;
 }
 .navbar{
     /* background-color: grey; */
@@ -76,6 +78,8 @@ body{
     display: flex;
     gap: 11px;
     flex-wrap: wrap;
+    max-height: 70vh;
+    overflow-y:scroll ;
 }
 .card{
 position: relative;
@@ -105,4 +109,52 @@ border-radius: 10px;
     color:grey;
 }
 
-
+.signup-butt{
+    background-color: rgb(34 34 34);
+    font-weight: bolder;
+    color: rgb(107, 103, 103);
+    /* padding: 5px; */
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 15px;
+    margin: 0 6px;
+}
+.signup-butt:hover{
+    font-size: 15.7px !important;
+    color: white;
+}
+.login-butt{
+    background-color: white;
+    font-weight: bolder;
+    color: rgb(107, 103, 103);
+    padding: 10px 30px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 15px;
+    margin: 0 6px;
+    border-radius: 28px;
+}
+.login-butt:hover{
+        font-size: 15.4px !important;
+    
+}
+.spotifyplaylist{
+    
+    /* background-color: yellow; */
+}
+.playbar{
+    position:absolute ;
+    width: 100%;
+    bottom: 0px;
+    background-color: rgb(99, 163, 99);
+    padding: 10px;
+}
+.song-butt{
+ 
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 32px;
+}
