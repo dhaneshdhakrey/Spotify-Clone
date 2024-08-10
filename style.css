@@ -1,94 +1,158 @@
 /* style css */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-*{
+* {
     margin: 0;
     padding: 0;
     font-family: "Roboto", sans-serif;
     font-weight: 750;
     font-style: normal;
     /* color:white; */
-    
+
 }
-body{
+
+body {
     background-color: black;
-    color:white;
+    color: white;
 }
 
-.left{
+.left {
     width: 25vw;
-    padding:10px;
-}
-.right{
-    width: 75vw;
-   margin: 15px 0;
-   position: relative;
+    padding: 10px;
 }
 
-.home ul li{
-    width: 25px;
-    display: flex;
-    gap: 16px;
-    padding-top:16px ;
-    list-style: none;
-    font-weight: bold;
-}
-.library{
-    min-height: 74vh;
+.right {
+    width: 75vw;
+    margin: 15px 0;
     position: relative;
 }
 
-.heading1{
+.home ul li {
+    width: 25px;
+    display: flex;
+    gap: 16px;
+    padding-top: 16px;
+    list-style: none;
+    font-weight: bold;
+}
+
+.library {
+    min-height: 74vh;
+    position: relative;
+    padding: 0 6px;
+    padding-top: 12px;
+
+}
+
+.heading1 {
     width: 100%;
     display: flex;
     gap: 16px;
     font-weight: bold;
     color: white;
-    font-size:10px ;
+    font-size: 10px;
 }
-.heading1 img{
-    width:27px;
 
+.heading1 img {
+    width: 27px;
 }
-.left-footer{
+
+.songslist{
+    font-size: 12.5px;
+   height: 450px;
+    overflow: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.songslist ul {
+    padding: 0px 3px;
+    margin-left: 1px;
+    margin-top: 30px;
+}
+
+.songslist ul li {
     display: flex;
-    font-size:9px;
-    gap:4px;
+    gap: 12px;
+    list-style: decimal;
+    cursor: pointer;
+    padding: 12px 0;
+    border: 1px solid white;
+    margin: 10px 0px;
+    padding: 13px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.songinfo {
+    /* overflow: hidden    ; */
+    white-space: nowrap;
+    color: rgb(169, 167, 167);
+}
+
+.playnow {
+    display: flex;
+
+    gap: 10px;
+
+    align-items: center;
+    font-size: 13px;
+    position: absolute;
+    right: 5px;
+}
+
+
+.left-footer {
+    
+    display: flex;
+    font-size: 9px;
+    gap: 4px;
     position: absolute;
     bottom: 10px;
-}
-.left-footer a{
-    color:grey;
+    
 }
 
-.navcont{
+.left-footer a {
+    color: grey;
+}
+
+.navcont {
     display: flex;
     justify-content: space-between;
-    background-color:rgb(34 34 34);
+    background-color: rgb(34 34 34);
     height: 65px;
 }
-.navbar{
+
+.navbar {
     /* background-color: grey; */
 }
-.navcont>*{
+
+.navcont>* {
     padding: 10px;
 }
-.cardcont{
+
+.cardcont {
     margin-top: 25px;
     display: flex;
-    gap: 11px;
+    gap: 32px;
     flex-wrap: wrap;
     max-height: 70vh;
-    overflow-y:scroll ;
+    overflow-y: scroll;
 }
-.card{
-position: relative;
-width:200px;
-background-color: #252525;
-padding: 10px;
-border-radius: 10px;
+
+.card {
+    position: relative;
+    width: 200px;
+    background-color: #252525;
+    /* padding: 10px; */
+    padding-top: 10px;
+    padding-right: 8px;
+    padding-left: 8px;
+    padding-bottom: 5px;
+    border-radius: 10px;
 }
-.playbutt{
+
+.playbutt {
     position: absolute;
     top: 160px;
     right: 12px;
@@ -97,19 +161,21 @@ border-radius: 10px;
 
 }
 
-.card img{
+.card img {
     /* margin-top: 20px; */
     width: 100%;
     object-fit: contain;
 }
-.card>*{
+
+.card>* {
     padding-top: 9px;
 }
-.card p{
-    color:grey;
+
+.card p {
+    color: grey;
 }
 
-.signup-butt{
+.signup-butt {
     background-color: rgb(34 34 34);
     font-weight: bolder;
     color: rgb(107, 103, 103);
@@ -120,11 +186,13 @@ border-radius: 10px;
     font-size: 15px;
     margin: 0 6px;
 }
-.signup-butt:hover{
+
+.signup-butt:hover {
     font-size: 15.7px !important;
     color: white;
 }
-.login-butt{
+
+.login-butt {
     background-color: white;
     font-weight: bolder;
     color: rgb(107, 103, 103);
@@ -136,25 +204,55 @@ border-radius: 10px;
     margin: 0 6px;
     border-radius: 28px;
 }
-.login-butt:hover{
-        font-size: 15.4px !important;
-    
+
+.login-butt:hover {
+    font-size: 15.4px !important;
+
 }
-.spotifyplaylist{
-    
+
+.spotifyplaylist {
+
     /* background-color: yellow; */
 }
-.playbar{
-    position:absolute ;
-    width: 100%;
-    bottom: 0px;
-    background-color: rgb(99, 163, 99);
+
+.playbar {
+    position: fixed;
+    /* width: 96%; */
+    width: 72.5vw;
+    height: 38px;
+    bottom: 2px;
+    background-color:rgb(194 196 193);;
     padding: 10px;
+    border-radius: 27px;
 }
-.song-butt{
- 
+
+.song-butt {
+
     display: flex;
     width: 100%;
     justify-content: center;
     gap: 32px;
+}
+.seekbar{
+    width: 97.4%;
+    /* border:2px solid white; */
+    height: 2.5px;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    background-color: grey;
+    position:absolute;
+    bottom: 8px;
+    border-radius: 19px;
+    margin: 8px;
+}
+.circle{
+    border-radius: 20px;
+    background-color: rgb(49, 47, 47);
+    height: 20px;
+    width: 20px;
+    position: relative;
+    bottom: .95px;
+    left: 0%;
+    transition: left 0.5s;
 }
