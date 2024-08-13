@@ -1,8 +1,9 @@
 console.log("Hello God this is my first script of my first project");
 
 let currentsong = new Audio();
+let songs;
 async function getsongs() {
-    let a = await fetch("http://127.0.0.1:3000/songs");
+    let a = await fetch("http://172.16.112.126:3000/songs");
     let response = await a.text();
     let divhtml = document.createElement("div");
     divhtml.innerHTML = response;
@@ -41,7 +42,7 @@ function playsong(track,pause=false) {
        
        document.querySelector(".songtime").innerHTML=`${formatTime(currentsong.currentTime)}/${formatTime(currentsong.duration)}`
        let dure=(currentsong.currentTime/currentsong.duration)*100;
-       console.log(dure);
+    //    console.log(dure);
        
        document.querySelector(".circle").style.left=`${dure}%`;
 
@@ -57,7 +58,7 @@ function playsong(track,pause=false) {
 }
 async function main(string1) {
     
-    let songs = await getsongs();
+     songs = await getsongs();
     
     playsong(songs[7],true)
     let cardhtml = document.querySelector(".cardcont");
@@ -125,12 +126,28 @@ async function main(string1) {
     document.querySelector(".close").addEventListener("click",()=>{
         document.querySelector(".left").style.left="-100%";
     })
-    return songs;
+    
+    // previoyus and next button    
+    prevbutton.addEventListener("click",()=>{
+        currentsong.pause()
+        let index=songs.indexOf(currentsong.src.split("/").slice(-1)[0])
+        if(index-1>-1) playsong(songs[index-1]);
+        else alert("no previos song is htheir")
+    })
+    nextbutton.addEventListener("click",()=>{
+        currentsong.pause()
+        let index=songs.indexOf(currentsong.src.split("/").slice(-1)[0])
+        if(index+1<songs.length)playsong(songs[index+1]);
+        else alert("no song is present nex");
 
+    })
+
+   
+    
     
     
 }
 
 
 
-let songs = main("Lord huron")
+ main("Lord huron")

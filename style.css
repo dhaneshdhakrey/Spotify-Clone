@@ -92,9 +92,13 @@ icons2{
 }
 
 .songinfo {
-    /* overflow: hidden    ; */
+    overflow: hidden ;
     white-space: nowrap;
     color: rgb(169, 167, 167);
+    width: 51%;
+}
+.songinfo div{
+    word-break: break-all;
 }
 
 .playnow {
@@ -137,14 +141,18 @@ icons2{
 .navcont>* {
     padding: 10px;
 }
+.hamburger{
+    display: none;
+}
 
 .cardcont {
     margin-top: 25px;
     display: flex;
+    /* justify-content: center; */
     gap: 32px;
     flex-wrap: wrap;
     max-height: 70vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .card {
@@ -181,9 +189,7 @@ icons2{
 .card p {
     color: grey;
 }
-.hamburger{
-    display: none;
-}
+
 
 .signup-butt {
     background-color: rgb(34 34 34);
@@ -222,8 +228,9 @@ icons2{
 
 .spotifyplaylist {
 
-    /* background-color: yellow; */
+    
 }
+
 
 .playbar {
     position: fixed;
@@ -231,7 +238,7 @@ icons2{
     /* justify-content: space-between; */
     /* align-items: center; */
     width: 72vw;
-    height: 38px;
+    min-height: 38px;
     bottom: 2px;
     background-color:rgb(194 196 193);;
     padding: 10px;
@@ -300,17 +307,21 @@ icons2{
 
 @media (max-width: 1200px) {
     .left{
+        background-color: black;
         position:absolute;
         left: -100%;
         z-index: 1;
-        transition:all 2s ;
+        transition:all 1.5s ;
         width: 300px;
+    }
+    .songinfo{
+        white-space: wrap;
     }
     .right{
         width: 100vw;
     }
-    .playbar{
-        width: 90vw;
+    .name1{
+        text-align: center;
     }
     .hamburger{
         display: block;
@@ -320,6 +331,47 @@ icons2{
     }
     .close{
         display: flex;
+    }
+    .cardcont{
+        justify-content: center;
+        
+        /* margin: 0px; */
+    }
+    .cardcont .card{
+        /* width: 90vw; */
+        gap: 10px;
+        font-size: 13px;
+        height: 284px;
+        width: 123px;
+    }
+    .playbutt {
+        position: absolute;
+        top: 83px;
+        right: 7px;
+        /* opacity: 0; */
+        transition: ease-in-out;
+    
+    }
+    .playbar{
+        width: 90vw;
+        font-size: 12px;
+        margin-left: 2.9%;
+    }
+    .trackname{
+        max-width: 29%;
+        /* flex-grow: 1; */
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        /* text-overflow:ellipsis; */
+        padding-left: 10px;
+        color:rgb(1, 4, 1);
+    }
+    .seekbar{
+        width: 93%;
+    }
+    .songtime{
+       
     }
     
 }
