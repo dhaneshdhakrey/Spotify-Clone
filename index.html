@@ -115,7 +115,7 @@
                 <div class="cardcont">
                     <!-- <tag1></tag1> -->
 
-                    <div class="card">
+                    <div data-folder="Bhakti" class="card">
                         <div class="playbutt">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"
                                 color="#000000" fill="none">
@@ -131,7 +131,7 @@
                         <p>2017 Various Artist</p>
 
                     </div>
-                    <div class="card">
+                    <div data-folder="sad" class="card">
                         <div class="playbutt">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"
                                 color="#000000" fill="none">
@@ -165,7 +165,14 @@
                         <img id="nextbutton" src="next.svg" alt="">
                         
                     </div> <!-- song buttons ends here -->
-                    <div class="songtime">00:00/00:00</div>
+                    <div class="songtime">
+                        00:00/00:00 
+                        <img class="volume-image" src="volume.svg" alt="">
+                        <input type="range" name="volume" class="volume-slider" style="display: none;">
+                    </div>
+                    <!-- <input type="range" name="volume" class="volume-slider" style="display: none;"> -->
+                    
+                    
                 </div><!-- in-playbar ends here -->
                 
             </div><!-- plabar closes here -->
@@ -174,7 +181,8 @@
 
     </div>
     <!-- cont closing -->
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
+    <script src="chatgpt.js"></script>
     <!-- <script src="test1.js"></script> -->
 </body>
 

@@ -1,26 +1,23 @@
 console.log("Hello God this is my first script of my first project");
 
 let currentsong = new Audio();
-async function getsongs() {
-    let a = await fetch("http://172.16.112.126:3000/songs");
+let songs;
+let currentfolder;
+async function getsongs(folder) {
+    currentfolder=folder
+    let a = await fetch(`http://172.16.112.126:3000/${folder}/`);
     let response = await a.text();
     let divhtml = document.createElement("div");
     divhtml.innerHTML = response;
-    console.log(divhtml);
-    
     let as = divhtml.getElementsByTagName("a");
-    // console.log(as);
-    let songs = [];
+     songs = [];
     for (let i = 0; i < as.length; i++) {
         const Element1 = as[i];
         if (Element1.href.endsWith("mp3")) {
-            songs.push(Element1.href.split("/songs/")[1]);
-        }
-        if(Element1.href.endsWith(".ts")){
-            songs.push(Element1.href.split("/songs/")[1]);
+            songs.push(Element1.href.split(`/${folder}/`)[1]);
         }
     }
-    console.log(songs);
+    // console.log("this is 2"+songs);
     return songs;
 }
 function formatTime(seconds) {
@@ -35,7 +32,9 @@ function formatTime(seconds) {
 
 
 function playsong(track,pause=false) {
-    currentsong.src = "/songs/" + track;
+    console.log("this is "+track);
+    
+    currentsong.src = `${currentfolder}/` + track;
     if(!pause){
     currentsong.play();
     playbutton.src = "pause.svg"
@@ -45,9 +44,16 @@ function playsong(track,pause=false) {
    
     currentsong.addEventListener("timeupdate", () => {
        
-       document.querySelector(".songtime").innerHTML=`${formatTime(currentsong.currentTime)}/${formatTime(currentsong.duration)}`
+       document.querySelector(".songtime").innerHTML=`${formatTime(currentsong.currentTime)}/${formatTime(currentsong.duration)} <img src="volume.svg" alt="">`
        let dure=(currentsong.currentTime/currentsong.duration)*100;
-       console.log(dure);
+    //    console.log(dure);
+       
+        if(dure==100){
+            currentsong.pause()
+            let index=songs.indexOf(currentsong.src.split("/").slice(-1)[0])
+            if(index+1<songs.length)playsong(songs[index+1]);
+            
+        }
        
        document.querySelector(".circle").style.left=`${dure}%`;
 
@@ -63,9 +69,9 @@ function playsong(track,pause=false) {
 }
 async function main(string1) {
     
-    let songs = await getsongs();
+     songs = await getsongs("songs/sad");
     
-    playsong(songs[7],true)
+    playsong(songs[0],true)
     let cardhtml = document.querySelector(".cardcont");
     for (const song of songs) {
         cardhtml.innerHTML = cardhtml.innerHTML + `   <div class="card">
@@ -104,13 +110,44 @@ async function main(string1) {
                         <img class="invert" src="play.svg" alt="">
                     </div></li>`;
     }
+    // for playlist when card is clicked
+    Array.from(document.getElementsByClassName("card")).forEach((e)=>{
+        e.addEventListener("click",async item=>{
+            const folderValue = e.dataset.folder;
+            console.log(folderValue);
+            
+            songs=await getsongs(`songs/${folderValue}`)
+            console.log("this is 2"+songs);
+            currentfolder=folderValue;
+            let songsUL = document.querySelector(".songslist").getElementsByTagName("ul")[0];
+            songsUL.innerHTML=""
+            for (const song of songs) {
+                songsUL.innerHTML = songsUL.innerHTML + `   
+                <li>
+                                <img class="invert" src="music.svg" alt="">
+                                <div class="songinfo">
+                                    <div >${song.replaceAll("%20", " ")}</div>
+                                    <div>By Dhanesh</div>
+                                    
+                                    
+                                </div><!-- song info closes here -->
+                                <div class="playnow">
+                                   <span> Play Now </span>
+                                <img class="invert" src="play.svg" alt="">
+                            </div></li>`;
+            }
+            
+        })
+    })
+
     Array.from(document.querySelector(".songslist").getElementsByTagName("li")).forEach(e => {
         e.addEventListener("click", element => {
             console.log(e.querySelector(".songinfo").firstElementChild.innerHTML);
-            playsong(e.querySelector(".songinfo").firstElementChild.innerHTML)
+            playsong("/songs/"+e.querySelector(".songinfo").firstElementChild.innerHTML)
         })
 
     });
+
     document.getElementById("playbutton").addEventListener("click", () => {
 
         if (currentsong.paused) {
@@ -131,12 +168,71 @@ async function main(string1) {
     document.querySelector(".close").addEventListener("click",()=>{
         document.querySelector(".left").style.left="-100%";
     })
-    return songs;
+    
+    // previoyus and next button    
+    prevbutton.addEventListener("click",()=>{
+        currentsong.pause()
+        let index=songs.indexOf(currentsong.src.split("/").slice(-1)[0])
+        if(index-1>-1) playsong(songs[index-1]);
+        else alert("no previos song is htheir")
+    })
+    nextbutton.addEventListener("click",()=>{
+        currentsong.pause()
+        let index=songs.indexOf(currentsong.src.split("/").slice(-1)[0])
+        if(index+1<songs.length)playsong(songs[index+1]);
+        else alert("no song is present nex");
 
+    })
+
+   document.querySelector(".right").addEventListener("click",()=>{
+    // Select the element with class 'left'
+    console.log("right is clicked");
     
+const element = document.querySelector(".left");
+
+// Get the computed style of the element
+const computedStyle = window.getComputedStyle(element);
+
+// Check if the 'left' property is '0'
+const isLeftZero = computedStyle.left === "0px";
+
+if(isLeftZero){
+    document.querySelector(".left").style.left="-100%";
+
+}
+   
+   })
     
+    // volume rocker
+    // Show the volume slider when hovering over the volume image
+document.querySelector(".volume-image").addEventListener("mouseover", () => {
+    document.querySelector(".volume-slider").style.display = "block";
+});
+
+// Hide the volume slider when the mouse leaves the volume image
+document.querySelector(".volume-image").addEventListener("mouseout", () => {
+    document.querySelector(".volume-slider").style.display = "none";
+});
+
+// Show the volume slider when hovering over the volume image
+document.querySelector(".volume-slider").addEventListener("mouseover", () => {
+    document.querySelector(".volume-slider").style.display = "block";
+});
+
+// Hide the volume slider when the mouse leaves the volume image
+document.querySelector(".volume-slider").addEventListener("mouseout", () => {
+    document.querySelector(".volume-slider").style.display = "none";
+});
+
+    document.querySelector(".volume-slider").addEventListener("change",(e)=>{
+        // console.log("change",e);
+       currentsong.volume=parseInt(e.target.value)/100; 
+    })
+
+
+
 }
 
 
 
-let songs = main("Lord huron")
+ main("Lord huron")
