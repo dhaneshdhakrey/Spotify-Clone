@@ -6,7 +6,7 @@ let currentfolder;
 let folders;
 async function getsongs(folder) {
     currentfolder=folder
-    let a = await fetch(`http://172.16.112.126:3000/songs/${folder}/`);
+    let a = await fetch(`http://192.168.137.146:3000/songs/${folder}/`);
     let response = await a.text();
     let divhtml = document.createElement("div");
     divhtml.innerHTML = response;
@@ -49,39 +49,49 @@ async function getsongs(folder) {
     return songs;
 }
 async function getfolders(){
-    let a = await fetch(`http://172.16.112.126:3000/songs/`);
+    let a = await fetch(`http://192.168.137.146:3000/songs/`);
     a=await a.text();
     divhtml=document.createElement("div")
     divhtml.innerHTML=a;
     a=divhtml.getElementsByTagName("a");
     folders=[];
+    let cardhtml = document.querySelector(".cardcont");
     for (let i = 0; i < a.length; i++) {
         const Element1 = a[i];
             
             if (Element1.href.includes("/songs")){
-            folders.push(Element1.href.split("/").slice(-2)[0]);
+            // folders.push(Element1.href.split("/").slice(-2)[0]);
+            let foldername=Element1.href.split("/").slice(-2)[0];
+            // console.log(foldername);
+            
+            let b1 = await fetch(`http://192.168.137.146:3000/songs/${foldername}/info.json`);
+            let json1=await b1.json();
+            console.log(json1);
+            
+           
+    
+            cardhtml.innerHTML = cardhtml.innerHTML + `   <div data-folder="${foldername}" class="card">
+        <div class="playbutt">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"
+                color="#000000" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="0" fill="#1fdf64" />
+                <path
+                    d="M15.4531 12.3948C15.3016 13.0215 14.5857 13.4644 13.1539 14.3502C11.7697 15.2064 11.0777 15.6346 10.5199 15.4625C10.2893 15.3913 10.0793 15.2562 9.90982 15.07C9.5 14.6198 9.5 13.7465 9.5 12C9.5 10.2535 9.5 9.38018 9.90982 8.92995C10.0793 8.74381 10.2893 8.60868 10.5199 8.53753C11.0777 8.36544 11.7697 8.79357 13.1539 9.64983C14.5857 10.5356 15.3016 10.9785 15.4531 11.6052C15.5156 11.8639 15.5156 12.1361 15.4531 12.3948Z"
+                    stroke="currentColor" stroke-width="0.9" stroke-linejoin="round" />
+            </svg>
+        </div><!-- playbutton ends -->
+    
+        <img src="/songs/${foldername}/thumbnail.jpeg" alt="">
+        <h2>${json1.title}</h2>
+        <p>${json1.Artist} Artist</p>
+    
+    </div>`
             }
+           
+    
     }
-    let cardhtml = document.querySelector(".cardcont");
-    for (const temp of folders) {
-        cardhtml.innerHTML = cardhtml.innerHTML + `   <div data-folder="${temp}" class="card">
-    <div class="playbutt">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"
-            color="#000000" fill="none">
-            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="0" fill="#1fdf64" />
-            <path
-                d="M15.4531 12.3948C15.3016 13.0215 14.5857 13.4644 13.1539 14.3502C11.7697 15.2064 11.0777 15.6346 10.5199 15.4625C10.2893 15.3913 10.0793 15.2562 9.90982 15.07C9.5 14.6198 9.5 13.7465 9.5 12C9.5 10.2535 9.5 9.38018 9.90982 8.92995C10.0793 8.74381 10.2893 8.60868 10.5199 8.53753C11.0777 8.36544 11.7697 8.79357 13.1539 9.64983C14.5857 10.5356 15.3016 10.9785 15.4531 11.6052C15.5156 11.8639 15.5156 12.1361 15.4531 12.3948Z"
-                stroke="currentColor" stroke-width="0.9" stroke-linejoin="round" />
-        </svg>
-    </div><!-- playbutton ends -->
-
-    <img src="https://4.bp.blogspot.com/-mHnxl74Ba5o/WOkioGBTXcI/AAAAAAAAPdM/Dq9FkVpvBmYsltLY7LYfZT5aezPzmVzbgCLcB/s1600/maxresdefault.jpg" alt="">
-    <h2>${temp.replaceAll("%20", " ")}</h2>
-    <p>2017 Various Artist</p>
-
-</div>`
-    }
-    console.log(folders);
+    
+    // console.log(folders);
     
 }
 function formatTime(seconds) {
@@ -134,7 +144,7 @@ function playsong(track,pause=false) {
 async function main(string1) {
         // currentfolder="sad"
         await getfolders();
-      await getsongs("sad");
+      await getsongs("Sad%20AF");
     
     playsong(songs[0],true)
     
@@ -143,17 +153,43 @@ async function main(string1) {
     
     
     // for playlist when card is clicked
-    Array.from(document.getElementsByClassName("card")).forEach((e)=>{
-        e.addEventListener("click",async item=>{
-            const folderValue = e.dataset.folder;
-            console.log(folderValue);
-            songs=await getsongs(`${folderValue}`)
-            
-            
+        Array.from(document.getElementsByClassName("card")).forEach((e)=>{
+            e.addEventListener("click",async item=>{
+                const folderValue = e.dataset.folder;
+                console.log(folderValue);
+                songs=await getsongs(`${folderValue}`)
+            let temp1=document.querySelector(".left");
+                if(temp1.style.left!="0%"){
+                    temp1.style.left="-40%"
+                    setTimeout(() => {
+                        temp1.style.left="-100%"
+                    }, 1000);
+                }
+                
+            })
         })
-    })
    
+ //event listner for swipe on right
+ let startX;
 
+ document.querySelector(".right").addEventListener("touchstart", (e) => {
+     startX = e.touches[0].clientX;
+ });
+ 
+ document.querySelector(".right").addEventListener("touchend", (e) => {
+     let endX = e.changedTouches[0].clientX;
+     let diffX = startX - endX;
+ 
+     if (Math.abs(diffX) > 50) { // You can adjust the swipe threshold as needed
+         let temp1 = document.querySelector(".left");
+         if (temp1.style.left !== "0%") {
+             temp1.style.left = "0%";
+         }
+     }
+ });
+
+
+ 
     document.getElementById("playbutton").addEventListener("click", () => {
 
         if (currentsong.paused) {
