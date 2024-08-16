@@ -116,7 +116,7 @@ function playsong(track,pause=false) {
    
     currentsong.addEventListener("timeupdate", () => {
        
-       document.querySelector(".songtime").innerHTML=`${formatTime(currentsong.currentTime)}/${formatTime(currentsong.duration)} <img src="volume.svg" alt="">`
+       document.querySelector(".songtime").innerHTML=`${formatTime(currentsong.currentTime)}/${formatTime(currentsong.duration)} <img src="volume.svg" alt=""><input type="range" name="volume" class="volume-slider" style="display: none;">`
        let dure=(currentsong.currentTime/currentsong.duration)*100;
     //    console.log(dure);
        //timine and seek bar control
