@@ -7,7 +7,7 @@ let folders;
 let NoPlays=1;
 async function getsongs(folder) {
     currentfolder=folder
-    let a = await fetch(`https://musi-fy-six.vercel.app/songs/${folder}/`);
+    let a = await fetch(`https://dhaneshdhakrey.github.io/Spotify-Clone/songs/${folder}/`);
     let response = await a.text();
     let divhtml = document.createElement("div");
     divhtml.innerHTML = response;
@@ -50,7 +50,7 @@ async function getsongs(folder) {
     return songs;
 }
 async function getfolders(){
-    let a = await fetch(`https://musi-fy-six.vercel.app/songs/`);
+    let a = await fetch(`https://dhaneshdhakrey.github.io/Spotify-Clone/songs/`);
     a=await a.text();
     divhtml=document.createElement("div")
     divhtml.innerHTML=a;
@@ -65,7 +65,7 @@ async function getfolders(){
             let foldername=Element1.href.split("/").slice(-2)[0];
             // console.log(foldername);
             
-            let b1 = await fetch(`https://musi-fy-six.vercel.app/songs/${foldername}/info.json`);
+            let b1 = await fetch(`https://dhaneshdhakrey.github.io/Spotify-Clone/songs/${foldername}/info.json`);
             let json1=await b1.json();
             console.log(json1);
             
