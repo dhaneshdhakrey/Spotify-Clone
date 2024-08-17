@@ -4,9 +4,10 @@ let currentsong = new Audio();
 let songs;
 let currentfolder;
 let folders;
+let NoPlays=1;
 async function getsongs(folder) {
     currentfolder=folder
-    let a = await fetch(`http://192.168.137.146:3000/songs/${folder}/`);
+    let a = await fetch(`http://172.16.112.126:3000/songs/${folder}/`);
     let response = await a.text();
     let divhtml = document.createElement("div");
     divhtml.innerHTML = response;
@@ -25,7 +26,7 @@ async function getsongs(folder) {
     for (const song of songs) {
         songsUL.innerHTML = songsUL.innerHTML + `   
         <li>
-                        <img class="invert" src="music.svg" alt="">
+                        <img class="invert" src="img/music.svg" alt="">
                         <div class="songinfo">
                             <div >${song.replaceAll("%20", " ")}</div>
                             <div>By Dhanesh</div>
@@ -34,7 +35,7 @@ async function getsongs(folder) {
                         </div><!-- song info closes here -->
                         <div class="playnow">
                            <span> Play Now </span>
-                        <img class="invert" src="play.svg" alt="">
+                        <img class="invert" src="img/play.svg" alt="">
                     </div></li>`;
     }
      // for  event listen song list play 
@@ -49,7 +50,7 @@ async function getsongs(folder) {
     return songs;
 }
 async function getfolders(){
-    let a = await fetch(`http://192.168.137.146:3000/songs/`);
+    let a = await fetch(`http://172.16.112.126:3000/songs/`);
     a=await a.text();
     divhtml=document.createElement("div")
     divhtml.innerHTML=a;
@@ -64,7 +65,7 @@ async function getfolders(){
             let foldername=Element1.href.split("/").slice(-2)[0];
             // console.log(foldername);
             
-            let b1 = await fetch(`http://192.168.137.146:3000/songs/${foldername}/info.json`);
+            let b1 = await fetch(`http://172.16.112.126:3000/songs/${foldername}/info.json`);
             let json1=await b1.json();
             console.log(json1);
             
@@ -83,7 +84,7 @@ async function getfolders(){
     
         <img src="/songs/${foldername}/thumbnail.jpeg" alt="">
         <h2>${json1.title}</h2>
-        <p>${json1.Artist} Artist</p>
+        <p>${json1.Artist}</p>
     
     </div>`
             }
@@ -109,14 +110,17 @@ function playsong(track,pause=false) {
     currentsong.src = `songs/${currentfolder}/` + track;
     if(!pause){
     currentsong.play();
-    playbutton.src = "pause.svg"
+    NoPlays++;
+    playbutton.src = "img/pause.svg"
 }
+// console.log(NoPlays);
+
     //updating track name and song duration
     document.querySelector(".trackname").innerHTML = decodeURI(track);
    
     currentsong.addEventListener("timeupdate", () => {
        
-       document.querySelector(".songtime").innerHTML=`${formatTime(currentsong.currentTime)}/${formatTime(currentsong.duration)} <img src="volume.svg" alt=""><input type="range" name="volume" class="volume-slider" style="display: none;">`
+       document.querySelector(".songtime").innerHTML=`${formatTime(currentsong.currentTime)}/${formatTime(currentsong.duration)} <img src="img/volume.svg" alt=""><input type="range" name="volume" class="volume-slider" style="display: none;">`
        let dure=(currentsong.currentTime/currentsong.duration)*100;
     //    console.log(dure);
        //timine and seek bar control
@@ -153,26 +157,60 @@ async function main(string1) {
     
     
     // for playlist when card is clicked
-    Array.from(document.getElementsByClassName("card")).forEach((e)=>{
-        e.addEventListener("click",async item=>{
-            const folderValue = e.dataset.folder;
-            console.log(folderValue);
-            songs=await getsongs(`${folderValue}`)
-            
-            
-        })
-    })
-   
+        Array.from(document.getElementsByClassName("card")).forEach((e)=>{
+            e.addEventListener("click",async item=>{
+                const folderValue = e.dataset.folder;
+                // console.log(folderValue);
+                songs=await getsongs(`${folderValue}`)
+            let temp1=document.querySelector(".left");
+                if(temp1.style.left!="0%"){
+                    temp1.style.left="-40%"
+                    setTimeout(() => {
+                        temp1.style.left="-100%"
+                    }, 500);
+                    console.log("gand mareya");
+                    
+                }
+                // else console.log("chiutya pa");
 
+                if(currentsong.paused&&NoPlays==1){
+                    playsong(songs[0],true);
+                }
+                
+                
+            })
+        })
+   
+ //event listner for swipe on right
+ let startX;
+
+ document.querySelector(".right").addEventListener("touchstart", (e) => {
+     startX = e.touches[0].clientX;
+ });
+ 
+ document.querySelector(".right").addEventListener("touchend", (e) => {
+     let endX = e.changedTouches[0].clientX;
+     let diffX = startX - endX;
+ 
+     if (Math.abs(diffX) > 60) { // You can adjust the swipe threshold as needed
+         let temp1 = document.querySelector(".left");
+         if (temp1.style.left !== "0%") {
+             temp1.style.left = "0%";
+         }
+     }
+ });
+
+
+ 
     document.getElementById("playbutton").addEventListener("click", () => {
 
         if (currentsong.paused) {
             currentsong.play();
-            playbutton.src = "pause.svg"
+            playbutton.src = "img/pause.svg"
         }
         else {
             currentsong.pause();
-            playbutton.src = "play.svg"
+            playbutton.src = "img/play.svg"
         }
     })
     //hamburder settings
@@ -202,7 +240,7 @@ async function main(string1) {
 
    document.querySelector(".right").addEventListener("click",()=>{
     // Select the element with class 'left'
-    console.log("right is clicked");
+    // console.log("right is clicked");
     
 const element = document.querySelector(".left");
 
@@ -245,7 +283,21 @@ document.querySelector(".volume-slider").addEventListener("mouseout", () => {
        currentsong.volume=parseInt(e.target.value)/100; 
     })
 
+    // psace buttone play pause
+    document.addEventListener("keydown",(e)=>{
+        if(e.code==="Space"){
+        if(currentsong.paused){
 
+           currentsong.play();
+           playbutton.src = "img/pause.svg"
+        }
+        else{
+            currentsong.pause()
+            playbutton.src = "img/play.svg"
+        }
+    }
+})
+    
 
 }
 
