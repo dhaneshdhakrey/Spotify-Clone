@@ -277,19 +277,19 @@ icons2{
 
 .trackname{
     
-    max-width: 10%;
+    max-width: 28%;
     /* flex-grow: 1; */
     text-align: center;
     white-space: nowrap;
-    /* overflow: hidden; */
+    overflow: hidden;
     /* text-overflow:ellipsis; */
     padding-left: 10px;
     color:rgb(1, 4, 1);
     
 }
-.songtimecont{
+/* .songtimecont{
     
-}
+} */
 .songtime{
     color:rgb(1, 4, 1);
     padding-right: 10px;
