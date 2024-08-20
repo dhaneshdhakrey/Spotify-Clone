@@ -7,7 +7,7 @@ let folders;
 let NoPlays=1;
 async function getsongs(folder) {
     currentfolder=folder
-    let a = await fetch(`http://127.0.0.1:3000/songs/${folder}/`);
+    let a = await fetch(`http://192.168.137.117:3000/songs/${folder}/`);
     let response = await a.text();
     let divhtml = document.createElement("div");
     divhtml.innerHTML = response;
@@ -50,7 +50,7 @@ async function getsongs(folder) {
     return songs;
 }
 async function getfolders(){
-    let a = await fetch(`http://127.0.0.1:3000/songs/`);
+    let a = await fetch(`http://192.168.137.117:3000/songs/`);
     a=await a.text();
     divhtml=document.createElement("div")
     divhtml.innerHTML=a;
@@ -65,7 +65,7 @@ async function getfolders(){
             let foldername=Element1.href.split("/").slice(-2)[0];
             // console.log(foldername);
             
-            let b1 = await fetch(`http://127.0.0.1:3000/songs/${foldername}/info.json`);
+            let b1 = await fetch(`http://192.168.137.117:3000/songs/${foldername}/info.json`);
             let json1=await b1.json();
             console.log(json1);
             
@@ -259,29 +259,29 @@ if(isLeftZero){
     
     // volume rocker
     // Show the volume slider when hovering over the volume image
-document.querySelector(".volume-image").addEventListener("mouseover", () => {
-    document.querySelector(".volume-slider").style.display = "block";
-});
+// document.querySelector(".volume-image").addEventListener("mouseover", () => {
+//     document.querySelector(".volume-slider").style.display = "block";
+// });
 
 // Hide the volume slider when the mouse leaves the volume image
-document.querySelector(".volume-image").addEventListener("mouseout", () => {
-    document.querySelector(".volume-slider").style.display = "none";
-});
+// document.querySelector(".volume-image").addEventListener("mouseout", () => {
+//     document.querySelector(".volume-slider").style.display = "none";
+// });
 
-// Show the volume slider when hovering over the volume image
-document.querySelector(".volume-slider").addEventListener("mouseover", () => {
-    document.querySelector(".volume-slider").style.display = "block";
-});
+// // Show the volume slider when hovering over the volume image
+// document.querySelector(".volume-slider").addEventListener("mouseover", () => {
+//     document.querySelector(".volume-slider").style.display = "block";
+// });
 
-// Hide the volume slider when the mouse leaves the volume image
-document.querySelector(".volume-slider").addEventListener("mouseout", () => {
-    document.querySelector(".volume-slider").style.display = "none";
-});
+// // Hide the volume slider when the mouse leaves the volume image
+// document.querySelector(".volume-slider").addEventListener("mouseout", () => {
+//     document.querySelector(".volume-slider").style.display = "none";
+// });
 
-    document.querySelector(".volume-slider").addEventListener("change",(e)=>{
-        // console.log("change",e);
-       currentsong.volume=parseInt(e.target.value)/100; 
-    })
+//     document.querySelector(".volume-slider").addEventListener("change",(e)=>{
+//         // console.log("change",e);
+//        currentsong.volume=parseInt(e.target.value)/100; 
+//     })
 
     // psace buttone play pause
     document.addEventListener("keydown",(e)=>{
